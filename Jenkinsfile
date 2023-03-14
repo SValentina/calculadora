@@ -54,7 +54,7 @@ pipeline {
       steps {            
         withCredentials(bindings: [azureServicePrincipal('prodServicePrincipal')]) {
           sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'  
-          sh 'az webapp create -n $APP_NAME_PROD -p  -g $RESOURCE_GROUP_PROD -i valen97/calculadora'
+          sh 'az webapp create -n $APP_NAME_PROD -p $PLAN_NAME  -g $RESOURCE_GROUP_PROD -i valen97/calculadora'
         }      
       }
     }          

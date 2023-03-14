@@ -52,9 +52,9 @@ pipeline {
 
     stage('Deploy Dev') {
       steps {            
-        withCredentials(bindings: [azureServicePrincipal('AzureServicePrincipal')]) {
+        withCredentials(bindings: [azureServicePrincipal('prodServicePrincipal')]) {
           sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'  
-          sh 'az webapp create -n $APP_NAME_PROD -g $RESOURCE_GROUP_PROD -i valen97/calculadora'
+          sh 'az webapp create -n $APP_NAME_PROD -p  -g $RESOURCE_GROUP_PROD -i valen97/calculadora'
         }      
       }
     }          
@@ -63,6 +63,7 @@ pipeline {
   parameters {
     string(name: 'ENV_PROD', defaultValue: 'production', description: 'Nombre del entorno de producción')
     string(name: 'RESOURCE_GROUP', defaultValue: 'SOCIUSRGLAB-RG-MODELODEVOPS-PROD', description: 'Grupo de Recursos') 
-    string(name: 'APP_NAME', defaultValue: 'sociuswebapptest006p', description: 'Nombre de App Service')    
+    string(name: 'APP_NAME', defaultValue: 'sociuswebapptest006p', description: 'Nombre del App Service')  
+    string(name: 'PLAN_NAME', defaultValue: 'Plan-SociusRGLABRGModeloDevOpsDockerProd', description: 'Plan del App Service')   
   }
 }

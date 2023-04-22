@@ -34,7 +34,7 @@ pipeline {
       }
       steps{
         //sh "echo 'FROM nginx:1.17.1-alpine \nCOPY dist/app-angular /usr/share/nginx/html' > Dockerfile"
-        sh "${dockerHome}/bin/docker build -f dockerfiles/Dockerfile.app -t valen97/calculadora ."
+        sh "${dockerHome}/bin/docker build -f Dockerfile.app -t valen97/calculadora ."
       }
     }
 

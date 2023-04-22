@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
+
 export class AppComponent {
   input: string = '';
   result: string = '';

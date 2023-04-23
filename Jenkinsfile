@@ -11,13 +11,9 @@ pipeline {
     }
 
     stage('Build') {
-      environment{
-        TITLE = 'prod'
-        BUTTON = 'danger'
-      }
       steps {
         //contentReplace(configs: [fileContentReplaceConfig(configs: [fileContentReplaceItemConfig(replace: "${TITLE}", search: '%TITLE%|dev'), fileContentReplaceItemConfig(replace: "${BUTTON}", search: '%BUTTON%|success')], fileEncoding: 'UTF-8', filePath: "${env.WORKSPACE}"+'/prod/src/environments/environment.ts')])
-        sh 'ng build --configuration ${ENV_PROD}'
+        sh 'ng build'
       }
     }
         
@@ -34,7 +30,7 @@ pipeline {
       }
       steps{
         //sh "echo 'FROM nginx:1.17.1-alpine \nCOPY dist/app-angular /usr/share/nginx/html' > Dockerfile"
-        sh "${dockerHome}/bin/docker build -f Dockerfile.app -t valen97/calculadora ."
+        sh "${dockerHome}/bin/docker build -f Dockerfile.app -t valen97/pruebacalcu ."
       }
     }
 
@@ -52,18 +48,17 @@ pipeline {
 
     stage('Deploy Dev') {
       steps {            
-        withCredentials(bindings: [azureServicePrincipal('prodServicePrincipal')]) {
+        withCredentials(bindings: [azureServicePrincipal('azuredevops_dev')]) {
           sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'  
-          sh 'az webapp create -n $APP_NAME -p $PLAN_NAME  -g $RESOURCE_GROUP -i valen97/calculadora'
+          sh 'az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME'  
+          sh 'kubectl apply -k /kubernetes/.'        
         }      
       }
     }          
   }
 
   parameters {
-    string(name: 'ENV_PROD', defaultValue: 'production', description: 'Nombre del entorno de producción')
-    string(name: 'RESOURCE_GROUP', defaultValue: 'SOCIUSRGLAB-RG-MODELODEVOPS-PROD', description: 'Grupo de Recursos') 
-    string(name: 'APP_NAME', defaultValue: 'sociuswebapptest006p', description: 'Nombre del App Service')  
-    string(name: 'PLAN_NAME', defaultValue: 'Plan-SociusRGLABRGModeloDevOpsDockerProd', description: 'Plan del App Service')   
+    string(name: 'RESOURCE_GROUP', defaultValue: 'SOCIUSRGLAB-RG-MODELODEVOPS-AKS', description: 'Grupo de Recursos') 
+    string(name: 'CLUSTER_NAME', defaultValue: 'ModeloDevOps-AKS', description: 'Nombre del App Service')      
   }
 }

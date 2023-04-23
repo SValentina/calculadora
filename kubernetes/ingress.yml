@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress  
+  namespace: calculadora
+  annotations: 
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: "calcu.modelodevops.sociuschile.cl"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: calculadora
+            port:
+              number: 80

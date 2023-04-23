@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: calculadora 
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: calculadora
+    namespace: calculadora
+spec:
+    type: ClusterIP
+    ports:
+    - port: 80 
+    selector:
+        app: calculadora

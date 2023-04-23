@@ -51,7 +51,7 @@ pipeline {
         withCredentials(bindings: [azureServicePrincipal('azuredevops_dev')]) {
           sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'  
           sh 'az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME'  
-          sh 'kubectl apply -k /kubernetes/.'        
+          sh 'kubectl apply -k kubernetes/.'        
         }      
       }
     }          

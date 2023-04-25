@@ -20,7 +20,6 @@ pipeline {
     stage('Test') {
       steps {
         sh 'ng test --browsers ChromeHeadless'
-        //sleep(time: 90, unit: 'SECONDS')
       }
     }
 

@@ -8,7 +8,7 @@ Código fuente de la aplicación Angular: https://codingdiksha.com/angular-calcu
 
 Versiones utilizadas: 
 - Node.js: 16.15.0
-- Angular-CLI: 13.3.4
+- Angular-CLI: 13.3.4 
 - Angular: 13.3.5
 - Chrom(e|ium) stable
 - Azure-CLI: 2.37.0

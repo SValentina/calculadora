@@ -18,17 +18,36 @@ pipeline {
         
     stage('Test') {
       steps {
-        sh 'ng test --browsers ChromeHeadless'
+        sh 'ng test --browsers ChromeHeadless --code-coverage'
       }
     }
 
+    stage('SonarQube Analysis') {
+      environment {
+        sonarHome = tool 'sonar-scanner'
+        JAVA_HOME = tool 'openjdk-11'
+      }
+      steps {
+        withSonarQubeEnv('sonarqube') {
+          sh "${sonarHome}/bin/sonar-scanner"
+        }
+
+      }
+    }
+
+    stage('Quality Gate') {
+      steps {
+        waitForQualityGate true
+        echo '--- QualityGate Passed ---'
+      }
+    }
+    
     stage('Build Docker Image'){
       environment {
         dockerHome = tool 'docker'
       }
       steps{
-        //sh "echo 'FROM nginx:1.17.1-alpine \nCOPY dist/app-angular /usr/share/nginx/html' > Dockerfile"
-        sh "${dockerHome}/bin/docker build -f Dockerfile.app -t valen97/pruebacalcu ."
+        sh "${dockerHome}/bin/docker build -f Dockerfile.app -t valen97/calculadora-angular ."
       }
     }
 
@@ -39,7 +58,7 @@ pipeline {
       }
       steps {            
         sh "${dockerHome}/bin/docker login -u $dockerHub_USR -p $dockerHub_PSW"
-        sh "${dockerHome}/bin/docker push valen97/calculadora"
+        sh "${dockerHome}/bin/docker push valen97/calculadora-angular"
         sh "${dockerHome}/bin/docker logout"
       }
     }

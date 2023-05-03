@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: calculadora
-          image: valen97/calculator-angular:latest
+          image: valen97/calculadora-angular:latest
           ports:
           - containerPort: 80

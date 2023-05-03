@@ -14,7 +14,7 @@ spec:
         app: calculadora 
     spec:
       containers:
-        - name: calculadora 
-          image: valen97/pruebacalcu:latest
+        - name: calculadora
+          image: valen97/calculator-angular:latest
           ports:
           - containerPort: 80

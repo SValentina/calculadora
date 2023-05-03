@@ -11,7 +11,7 @@ pipeline {
     }
 
     stage('Build') {
-      steps {
+      steps { 
         sh 'ng build'
       }
     }

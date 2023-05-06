@@ -16,4 +16,19 @@
 <body>
   <app-root></app-root>
 </body>
+
+<script>
+  function disableBtn(){
+    var botones_desactivados = false; 
+    if (botones_desactivados == false){ 
+      document.getElementById('button').disabled = true;    
+      botones_desactivados = true; 
+    }
+    else {
+      document.getElementById('button').disabled = false;    
+      botones_desactivados = false; 
+    }
+    console.log(botones_desactivados);
+  }
+</script>
 </html>

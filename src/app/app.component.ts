@@ -7,17 +7,15 @@ import { environment } from 'src/environments/environment';
 })
 
 export class AppComponent {
-  input: string = '';
+  input: string = '0';
   result: string = '';
   title: string = environment.title;
   button: string = environment.button;
 
   pressNum(num: string) {
-
     //Do Not Allow . more than once
     if (num == ".") {
       if (this.input != "") {
-
         const lastNum = this.getLastOperand()
         console.log(lastNum.lastIndexOf("."))
         if (lastNum.lastIndexOf(".") >= 0) return;
@@ -36,6 +34,10 @@ export class AppComponent {
       }
     }
 
+    if (this.input == '0'){
+      this.input = ''
+    }
+  
     this.input = this.input + num
     this.calcAnswer();
   }
@@ -65,16 +67,20 @@ export class AppComponent {
     this.calcAnswer();
   }
 
-
   clear() {
     if (this.input != "") {
-      this.input = this.input.substr(0, this.input.length - 1)
+      if (this.input.length == 1){
+        this.input = '0'
+      }
+      else{
+        this.input = this.input.substr(0, this.input.length - 1)
+      }      
     }
   }
 
   allClear() {
-    this.result = '';
-    this.input = '';
+    this.result = '0';
+    this.input = '0';
   }
 
   calcAnswer() {

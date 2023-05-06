@@ -1,7 +1,7 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: calculadora
+  name: calculadora-deploy
   namespace: calculadora
 spec:
   replicas: 1

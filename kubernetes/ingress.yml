@@ -7,7 +7,7 @@ metadata:
     ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: "calcu.modelodevops.sociuschile.cl"
+  - host: "calculadora-angular.modelodevops.sociuschile.cl"
     http:
       paths:
       - path: /

@@ -29,6 +29,7 @@ pipeline {
       }
       steps {
         withSonarQubeEnv('sonarqube') {
+          sh "sed -i 's/%BUILD_NUMBER%/${BUILD_NUMBER}/g' sonar-project.properties"
           sh "${sonarHome}/bin/sonar-scanner"
         }
 
@@ -47,7 +48,7 @@ pipeline {
         dockerHome = tool 'docker'
       }
       steps{
-        sh "${dockerHome}/bin/docker build -f Dockerfile.app -t valen97/calculadora-angular ."
+        sh "${dockerHome}/bin/docker build -f Dockerfile.app -t valen97/calculadora-angular:${BUILD_NUMBER} ."
       }
     }
 
@@ -57,15 +58,16 @@ pipeline {
         dockerHub = credentials('VsDockerHub')
       }
       steps {            
-        sh "${dockerHome}/bin/docker login -u $dockerHub_USR -p $dockerHub_PSW"
-        sh "${dockerHome}/bin/docker push valen97/calculadora-angular"
-        sh "${dockerHome}/bin/docker logout"
+        sh '${dockerHome}/bin/docker login -u $dockerHub_USR -p $dockerHub_PSW'
+        sh '${dockerHome}/bin/docker push valen97/calculadora-angular:${BUILD_NUMBER}'
+        sh '${dockerHome}/bin/docker logout'
       }
     }
 
     stage('Deploy Dev') {
       steps {            
         withCredentials(bindings: [azureServicePrincipal('azuredevops_dev')]) {
+          sh "sed -i 's/%BUILD_NUMBER%/${BUILD_NUMBER}/g' kubernetes/deployment.yml"
           sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'  
           sh 'az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME'  
           sh 'kubectl apply -k kubernetes/.'        
@@ -77,6 +79,7 @@ pipeline {
   parameters {
     string(name: 'RESOURCE_GROUP', defaultValue: 'SOCIUSRGLAB-RG-MODELODEVOPS-AKS', description: 'Grupo de Recursos') 
     string(name: 'CLUSTER_NAME', defaultValue: 'ModeloDevOps-AKS', description: 'Nombre del App Service')      
+    string(name: 'BUILD_NUMBER', defaultValue: "${BUILD_NUMBER}", description: 'Número de ejecución')      
   }
   
   post{

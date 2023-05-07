@@ -84,18 +84,18 @@ pipeline {
   
   post{
     success{
-      mail to: "svenatain@gmail.com",
+      mail to: "valentina_17_01@hotmail.com",
       subject: "EXITOSA ejecución de la pipeline '${JOB_NAME}'",
-      body: """Estado de ejecución: '${currentBuild.result}' <br>
-            Número de ejecución: '${BUILD_NUMBER}' <br>
-            URL de los logs de la ejecución: '${env.BUILD_URL}'"""
+      body: """* Estado de ejecución: ${currentBuild.result}
+      * Número de ejecución: ${BUILD_NUMBER}
+      * URL para visualizar los logs de la ejecución: ${env.BUILD_URL}"""
     }
     failure{
-      mail to: "svenatain@gmail.com",
+      mail to: "valentina_17_01@hotmail.com",
       subject: "FALLIDA ejecución de la pipeline '${JOB_NAME}'",
-      body: """Estado de ejecución: '${currentBuild.result}' <br>
-            Número de ejecución: '${BUILD_NUMBER}' <br>
-            URL de los logs de la ejecución: '${BUILD_URL}'"""
+      body: """* Estado de ejecución: ${currentBuild.result}
+      * Número de ejecución: ${BUILD_NUMBER}
+      * URL para visualizar los logs de la ejecución: ${BUILD_URL}"""
     }
   }
 }

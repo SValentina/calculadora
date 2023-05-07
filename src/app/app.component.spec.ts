@@ -47,16 +47,16 @@ describe('AppComponent', () => {
   it(`pressOperator`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    app.input('2')
+    app.input = '2'
     app.pressOperator('-')
     expect(app.input).toEqual('2-')
-    app.input('3+')
+    app.input = '3+'
     app.pressOperator('+')
     expect(app.input).toEqual('3+')
-    app.input('50/')
+    app.input = '50/'
     app.pressOperator('/')
     expect(app.input).toEqual('50/')
-    app.input('123')
+    app.input = '123'
     app.pressOperator('*')
     expect(app.input).toEqual('123*')
   });
@@ -66,10 +66,10 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     app.clear()
     expect(app.input).toEqual('0')
-    app.input('1')
+    app.input = '1'
     app.clear()
     expect(app.input).toEqual('0')
-    app.input('2+2')
+    app.input = '2+2'
     app.clear()
     expect(app.input).toEqual('2+')
   });

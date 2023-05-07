@@ -57,7 +57,6 @@ export class AppComponent {
 
   pressOperator(op: string) {
     //Do not allow operators more than once
-    console.log(op);
     const lastKey = this.input[this.input.length - 1];
     if (lastKey === "/" || lastKey === "*" || lastKey === "-" || lastKey === "+") {
       return;

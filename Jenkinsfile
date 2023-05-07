@@ -80,7 +80,7 @@ pipeline {
   }
   
   post{
-    successful{
+    success{
       mail to: "svenatain@gmail.com",
       subject: "EXITOSA ejecución de la pipeline '${env.JOB_NAME}'",
       body: """Estado de ejecución: '${currentBuild.result}' <br>

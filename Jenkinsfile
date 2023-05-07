@@ -78,4 +78,21 @@ pipeline {
     string(name: 'RESOURCE_GROUP', defaultValue: 'SOCIUSRGLAB-RG-MODELODEVOPS-AKS', description: 'Grupo de Recursos') 
     string(name: 'CLUSTER_NAME', defaultValue: 'ModeloDevOps-AKS', description: 'Nombre del App Service')      
   }
+  
+  post{
+    successful{
+      mail to: "svenatain@gmail.com",
+      subject: "EXITOSA ejecución de la pipeline '${env.JOB_NAME}'",
+      body: """Estado de ejecución: '${currentBuild.result}' <br>
+            Número de ejecución: '${env.BUILD_NUMBER}' <br>
+            URL de los logs de la ejecución: '${env.BUILD_URL}'"""
+    }
+    failure{
+      mail to: "svenatain@gmail.com",
+      subject: "FALLIDA ejecución de la pipeline '${env.JOB_NAME}'",
+      body: """Estado de ejecución: '${currentBuild.result}' <br>
+            Número de ejecución: '${env.BUILD_NUMBER}' <br>
+            URL de los logs de la ejecución: '${env.BUILD_URL}'"""
+    }
+  }
 }

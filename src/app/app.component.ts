@@ -56,15 +56,13 @@ export class AppComponent {
 
 
   pressOperator(op: string) {
-
     //Do not allow operators more than once
+    console.log(op);
     const lastKey = this.input[this.input.length - 1];
-    if (lastKey === '/' || lastKey === '*' || lastKey === '-' || lastKey === '+') {
+    if (lastKey === "/" || lastKey === "*" || lastKey === "-" || lastKey === "+") {
       return;
     }
-
     this.input = this.input + op
-    this.calcAnswer();
   }
 
   clear() {
@@ -85,7 +83,6 @@ export class AppComponent {
 
   calcAnswer() {
     let formula = this.input;
-
     let lastKey = formula[formula.length - 1];
 
     if (lastKey === '.') {
@@ -93,7 +90,6 @@ export class AppComponent {
     }
 
     lastKey = formula[formula.length - 1];
-
     if (lastKey === '/' || lastKey === '*' || lastKey === '-' || lastKey === '+' || lastKey === '.') {
       formula = formula.substr(0, formula.length - 1);
     }

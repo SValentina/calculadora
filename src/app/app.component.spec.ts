@@ -34,14 +34,14 @@ describe('AppComponent', () => {
     expect(app.getLastOperand()).toEqual('15');
   });
 
-  /*it(`pressOperator`, () => {
+  it(`pressOperator`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    app.pressOperator('47-17')
+    app.pressOperator('47-17');
     expect(app.input).toContain('-');
-    app.pressOperator('47+17')
+    app.pressOperator('47+17');
     expect(app.input).toContain('+');
-  });*/
+  });
 
   it(`clear`, () => {
     const fixture = TestBed.createComponent(AppComponent);

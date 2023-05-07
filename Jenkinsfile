@@ -60,6 +60,7 @@ pipeline {
       steps {            
         sh '${dockerHome}/bin/docker login -u $dockerHub_USR -p $dockerHub_PSW'
         sh '${dockerHome}/bin/docker push valen97/calculadora-angular:${BUILD_NUMBER}'
+        sh '${dockerHome}/bin/docker rmi valen97/calculadora-angular:${BUILD_NUMBER}'
         sh '${dockerHome}/bin/docker logout'
       }
     }

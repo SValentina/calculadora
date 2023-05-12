@@ -80,7 +80,6 @@ pipeline {
   parameters {
     string(name: 'RESOURCE_GROUP', defaultValue: 'SOCIUSRGLAB-RG-MODELODEVOPS-AKS', description: 'Grupo de Recursos') 
     string(name: 'CLUSTER_NAME', defaultValue: 'ModeloDevOps-AKS', description: 'Nombre del App Service')      
-    string(name: 'BUILD_NUMBER', defaultValue: "${BUILD_NUMBER}", description: 'Número de ejecución')      
   }
   
   post{

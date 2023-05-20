@@ -75,14 +75,16 @@ pipeline {
 
       mail to: "valentina_17_01@hotmail.com",
       subject: "EXITOSA ejecución de la pipeline '${JOB_NAME}'",
-      body: """* Estado de ejecución: ${currentBuild.result}
+      body: """
+      * Estado de ejecución: ${currentBuild.result}
       * Número de ejecución: ${BUILD_NUMBER}
       * URL para visualizar los logs de la ejecución: ${env.BUILD_URL}"""
     }
     failure{
       mail to: "valentina_17_01@hotmail.com",
       subject: "FALLIDA ejecución de la pipeline '${JOB_NAME}'",
-      body: """* Estado de ejecución: ${currentBuild.result}
+      body: """
+      * Estado de ejecución: ${currentBuild.result}
       * Número de ejecución: ${BUILD_NUMBER}
       * URL para visualizar los logs de la ejecución: ${BUILD_URL}"""
     }

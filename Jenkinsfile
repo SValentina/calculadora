@@ -65,7 +65,7 @@ pipeline {
       }
     }
   }
-  
+
   post{
     success {
       build(job: 'calculadora-angular-deploy', 
@@ -111,4 +111,3 @@ pipeline {
       * URL para visualizar los logs de la ejecución: ${BUILD_URL}"""
     }
   }*/
-}

@@ -33,7 +33,7 @@ body {
 
 .display-container .model {
 	display: block;
-	font-family: 'Times New Roman';
+	font-family: 'Times New Roman', 'sans-serif';
 	color: #9A9DA5;
 	text-indent: 12px;
 }
@@ -42,14 +42,13 @@ body {
 	clear: both;
 	padding: 20px;
 	background: #9EB3AF;
-	font-family: digital;
+	font-family: digital, 'sans-serif', 'Ubuntu';
 	font-size: 24px;
 	border: 10px inset rgba(179, 158, 173,0.22);
 	text-align: right;
 	letter-spacing: 5px;
-  font-family: 'Ubuntu', sans-serif;
-  border-radius: 10px;
-  overflow: hidden;
+	border-radius: 10px;
+	overflow: hidden;
 }
 
 .solar {
@@ -126,9 +125,10 @@ button {
 	font-size: 20px;
 }
 
-.command-container button:nth-child(2){
+.command-container button:nth-child(2) {
 	background: #242632;
-	color: black;
+	border: 3px solid #242632;
+	font-size: 20px;
 }
 
 .operator-container span:first-child button,
@@ -136,15 +136,4 @@ button {
 	background: #E38F4F;
 	color: black;
 }
-
-.calc-container:nth-child(2) {
-}
-
-.calc-container {
-}
-
-.operator-container {
-}
-
-.operator-container span:last-child button {	
-}
+/* You can add global styles to this file, and also import other style files */

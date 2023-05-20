@@ -29,6 +29,7 @@ pipeline {
       }
       steps {
         withSonarQubeEnv('sonarqube') {
+          sh "sed -i 's/%BUILD_NUMBER%/${BUILD_NUMBER}/g' sonar-project.properties"
           sh "${sonarHome}/bin/sonar-scanner"
         }
 
@@ -47,7 +48,7 @@ pipeline {
         dockerHome = tool 'docker'
       }
       steps{
-        sh "${dockerHome}/bin/docker build -f Dockerfile.app -t valen97/calculadora-angular ."
+        sh "${dockerHome}/bin/docker build -f Dockerfile.app -t valen97/calculadora-angular:${BUILD_NUMBER} ."
       }
     }
 
@@ -57,15 +58,17 @@ pipeline {
         dockerHub = credentials('VsDockerHub')
       }
       steps {            
-        sh "${dockerHome}/bin/docker login -u $dockerHub_USR -p $dockerHub_PSW"
-        sh "${dockerHome}/bin/docker push valen97/calculadora-angular"
-        sh "${dockerHome}/bin/docker logout"
+        sh '${dockerHome}/bin/docker login -u $dockerHub_USR -p $dockerHub_PSW'
+        sh '${dockerHome}/bin/docker push valen97/calculadora-angular:${BUILD_NUMBER}'
+        sh '${dockerHome}/bin/docker rmi valen97/calculadora-angular:${BUILD_NUMBER}'
+        sh '${dockerHome}/bin/docker logout'
       }
     }
 
     stage('Deploy Dev') {
       steps {            
         withCredentials(bindings: [azureServicePrincipal('azuredevops_dev')]) {
+          sh "sed -i 's/%BUILD_NUMBER%/${BUILD_NUMBER}/g' kubernetes/deployment.yml"
           sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'  
           sh 'az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME'  
           sh 'kubectl apply -k kubernetes/.'        
@@ -81,18 +84,18 @@ pipeline {
   
   post{
     success{
-      mail to: "svenatain@gmail.com",
-      subject: "EXITOSA ejecución de la pipeline '${env.JOB_NAME}'",
-      body: """Estado de ejecución: '${currentBuild.result}' <br>
-            Número de ejecución: '${env.BUILD_NUMBER}' <br>
-            URL de los logs de la ejecución: '${env.BUILD_URL}'"""
+      mail to: "valentina_17_01@hotmail.com",
+      subject: "EXITOSA ejecución de la pipeline '${JOB_NAME}'",
+      body: """* Estado de ejecución: ${currentBuild.result}
+      * Número de ejecución: ${BUILD_NUMBER}
+      * URL para visualizar los logs de la ejecución: ${env.BUILD_URL}"""
     }
     failure{
-      mail to: "svenatain@gmail.com",
-      subject: "FALLIDA ejecución de la pipeline '${env.JOB_NAME}'",
-      body: """Estado de ejecución: '${currentBuild.result}' <br>
-            Número de ejecución: '${env.BUILD_NUMBER}' <br>
-            URL de los logs de la ejecución: '${env.BUILD_URL}'"""
+      mail to: "valentina_17_01@hotmail.com",
+      subject: "FALLIDA ejecución de la pipeline '${JOB_NAME}'",
+      body: """* Estado de ejecución: ${currentBuild.result}
+      * Número de ejecución: ${BUILD_NUMBER}
+      * URL para visualizar los logs de la ejecución: ${BUILD_URL}"""
     }
   }
 }

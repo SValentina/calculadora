@@ -70,9 +70,7 @@ pipeline {
     success {
       build(job: 'calculadora-angular-deploy', 
       parameters: [
-        string(name: 'RESOURCE_GROUP', value: 'SOCIUSRGLAB-RG-MODELODEVOPS-AKS'),
-        string(name: 'CLUSTER_NAME', value: 'ModeloDevOps-AKS'),
-        string(name: 'BUILD_NUMBER', value: '${BUILD_NUMBER}')
+        string(name: 'BUILD_NUMBER', value: "${BUILD_NUMBER}")
       ])
     }
   }

@@ -75,37 +75,3 @@ pipeline {
     }
   }
 }
-/*
-    stage('Deploy Dev') {
-      steps {            
-        withCredentials(bindings: [azureServicePrincipal('azuredevops_dev')]) {
-          sh "sed -i 's/%BUILD_NUMBER%/${BUILD_NUMBER}/g' kubernetes/deployment.yml"
-          sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'  
-          sh 'az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME'  
-          sh 'kubectl apply -k kubernetes/.'        
-        }      
-      }
-    }          
-  }
-
-  parameters {
-    string(name: 'RESOURCE_GROUP', defaultValue: 'SOCIUSRGLAB-RG-MODELODEVOPS-AKS', description: 'Grupo de Recursos') 
-    string(name: 'CLUSTER_NAME', defaultValue: 'ModeloDevOps-AKS', description: 'Nombre del App Service')      
-  }
-  
-  post{
-    success{
-      mail to: "valentina_17_01@hotmail.com",
-      subject: "EXITOSA ejecución de la pipeline '${JOB_NAME}'",
-      body: """* Estado de ejecución: ${currentBuild.result}
-      * Número de ejecución: ${BUILD_NUMBER}
-      * URL para visualizar los logs de la ejecución: ${env.BUILD_URL}"""
-    }
-    failure{
-      mail to: "valentina_17_01@hotmail.com",
-      subject: "FALLIDA ejecución de la pipeline '${JOB_NAME}'",
-      body: """* Estado de ejecución: ${currentBuild.result}
-      * Número de ejecución: ${BUILD_NUMBER}
-      * URL para visualizar los logs de la ejecución: ${BUILD_URL}"""
-    }
-  }*/

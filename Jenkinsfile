@@ -64,7 +64,20 @@ pipeline {
         sh '${dockerHome}/bin/docker logout'
       }
     }
-
+  }
+  
+  post{
+    success {
+      build(job: 'calculadora-angular-deploy', 
+      parameters: [
+        string(name: 'RESOURCE_GROUP', value: 'SOCIUSRGLAB-RG-MODELODEVOPS-AKS'),
+        string(name: 'CLUSTER_NAME', value: 'ModeloDevOps-AKS'),
+        string(name: 'BUILD_NUMBER', value: '${BUILD_NUMBER}')
+      ])
+    }
+  }
+}
+/*
     stage('Deploy Dev') {
       steps {            
         withCredentials(bindings: [azureServicePrincipal('azuredevops_dev')]) {
@@ -97,5 +110,5 @@ pipeline {
       * Número de ejecución: ${BUILD_NUMBER}
       * URL para visualizar los logs de la ejecución: ${BUILD_URL}"""
     }
-  }
+  }*/
 }

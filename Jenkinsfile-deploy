@@ -1,6 +1,6 @@
 pipeline {
   
-  agent { dockerfile { args '--privileged --network=host' } }
+  agent { dockerfile }
   
   stages {    
     stage('Deploy Dev') {

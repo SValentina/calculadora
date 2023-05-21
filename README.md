@@ -33,8 +33,6 @@ version: '3.8'
 services:
     jenkins:
         image: jenkins/docker
-        build:
-            context: dockerjenkins
         ports:
             - 8080:8080
             - 50000:50000
@@ -46,7 +44,6 @@ services:
             - net
     sonarqube:
         image: sonarqube:latest
-        privileged: true
         ports:
             - 9000:9000
             - 9092:9092

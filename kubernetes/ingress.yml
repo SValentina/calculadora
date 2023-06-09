@@ -4,7 +4,7 @@ metadata:
   name: calculadora-ingress  
   namespace: calculadora
   annotations:
-    ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
   - host: "calculadora-angular.modelodevops.sociuschile.cl"
